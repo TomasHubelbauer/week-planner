@@ -1,0 +1,48 @@
+body {
+  font: icon;
+}
+
+table {
+  border: 1px solid gray;
+  width: 100%;
+  user-select: none;
+}
+
+caption {
+  caption-side: bottom;
+}
+
+caption>div {
+  margin: 1em;
+}
+
+tr:hover {
+  background: silver;
+}
+
+td {
+  border: 1px solid silver;
+}
+
+label {
+  background: whitesmoke;
+  border-radius: 2px;
+  margin: 0 1ex;
+  padding: 1ex 0;
+  word-spacing: 1ex;
+}
+
+label>span {
+  cursor: pointer;
+  margin: 0 1ex;
+}
+
+label:has(input:checked)>span {
+  cursor: text;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
