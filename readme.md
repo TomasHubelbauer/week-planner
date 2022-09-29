@@ -66,3 +66,8 @@ The improvements I have in mind are kept in this readme.
   It is enabled via the `tlayout.css.has-selector.enabled` `about:config` flag.
   Currently there is a bug with `:has(:checked)` where if the `label` is clicked
   and the `input` becomes `:checked` the selector doesn't reflect that.
+
+- [ ] Fix end of the range showing up as `:60` when looking at an hour's end
+
+  I chose a naive way to calculate the end of the range and I need to cover this
+  case as well.
