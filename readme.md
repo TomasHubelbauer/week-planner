@@ -16,6 +16,9 @@ The application is rudimentary, for personal use and non-serious at that.
 To run the application, open the path of the `index.html` file in your browser.
 You might need to configure your browser to allow CORS on the `file:` protocol.
 
+You can also use the online version at:
+https://tomashubelbauer.github.io/week-planner
+
 ## Features
 
 Lays out a single week with 10-minute slots each of which can be assigned a
