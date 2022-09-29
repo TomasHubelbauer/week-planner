@@ -81,3 +81,7 @@ The improvements I have in mind are kept in this readme.
   and rather than pulling out the commons into a shared ESM package set, I think
   it might make sense to make this a single Planner application with two weeks
   into the same data.
+
+- [ ] Fix the color picker not appearing when creating a new activity type
+
+  It will appear when I go to edit it later, but not when creating it.
