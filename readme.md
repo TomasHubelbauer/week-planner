@@ -85,3 +85,8 @@ The improvements I have in mind are kept in this readme.
 - [ ] Fix the color picker not appearing when creating a new activity type
 
   It will appear when I go to edit it later, but not when creating it.
+
+- [ ] Use the ESM import maps to abstract away DOM access and introduce tests
+
+  The tests will make it possible to mock the DOM elements and ensure the right
+  DOM operations are called on them by the individual flows.
