@@ -20,6 +20,10 @@ tr:hover {
   background: silver;
 }
 
+th {
+  width: 0;
+}
+
 td {
   border: 1px solid silver;
 }
