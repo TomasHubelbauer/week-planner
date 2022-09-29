@@ -74,3 +74,10 @@ The improvements I have in mind are kept in this readme.
 
   I chose a naive way to calculate the end of the range and I need to cover this
   case as well.
+
+- [ ] Consider merging with https://github.com/TomasHubelbauer/week-planner
+
+  I am prototyping that as its own thing but there is an opportunity for reuse
+  and rather than pulling out the commons into a shared ESM package set, I think
+  it might make sense to make this a single Planner application with two weeks
+  into the same data.
