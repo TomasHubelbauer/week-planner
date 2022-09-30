@@ -1,179 +1,110 @@
-const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const table = document.querySelector('table');
-const typeDiv = document.querySelector('#typeDiv');
-const slotDiv = document.querySelector('#slotDiv');
+import calculateColor from './calculateColor.js';
+import clearSelection from './clearSelection.js';
+import fetchData from './fetchData.js';
+import getSelection from './getSelection.js';
+import iterateDates from './iterateDates.js';
+import iterateSlots from './iterateSlots.js';
+import render from './render.js';
+import storeData from './storeData.js';
 
-let _type;
+clearSelection();
+render();
 
-const types = JSON.parse(localStorage.getItem('types') ?? '[]');
+const typeDialog = document.querySelector('#typeDialog');
+const typeForm = document.querySelector('#typeForm');
+const nameInput = document.querySelector('#nameInput');
 
-if (localStorage.getItem('typeIndex') !== null) {
-  _type = types[localStorage.getItem('typeIndex')];
-}
-
-function renderTypes() {
-  typeDiv.replaceChildren();
-
-  for (const type of types) {
-    const label = document.createElement('label');
-    label.style.color = type.color;
-
-    const input = document.createElement('input');
-    input.type = 'radio';
-    input.name = 'type';
-    input.checked = type === _type;
-
-    // Note that `click` is used over `change` so it fires when already checked
-    input.addEventListener('click', () => {
-      if (_type === type) {
-        const name = prompt('Name', type.name);
-        if (!name) {
-          return;
-        }
-
-        type.name = name;
-        localStorage.setItem('types', JSON.stringify(types));
-        renderTypes();
-
-        const input = document.createElement('input');
-        input.type = 'color';
-        input.value = type.color;
-
-        // Note that `input` is used over `change` to not default to black on Esc
-        input.addEventListener('input', () => {
-          type.color = input.value;
-          localStorage.setItem('types', JSON.stringify(types));
-          renderTypes();
-
-          input.remove();
-        });
-
-        input.click();
-      }
-      else {
-        _type = type;
-        localStorage.setItem('typeIndex', types.indexOf(type));
-
-        // Note that this fixes a Firefox bug where `:has(:checked)` gets stuck
-        // TODO: Remove when Firefox fixes this once `:has` is in GA
-        renderTypes();
-      }
-    });
-
-    const span = document.createElement('span');
-    span.textContent = type.name;
-
-    const button = document.createElement('button');
-    button.textContent = '-';
-    button.addEventListener('click', () => {
-      if (!confirm(`Delete type '${type.name}'?`)) {
-        return;
-      }
-
-      if (_type === type) {
-        _type = null;
-      }
-
-      types.splice(types.indexOf(type), 1);
-      localStorage.setItem('types', JSON.stringify(types));
-      renderTypes();
-    });
-
-
-    label.append(input, span, button);
-    typeDiv.append(label);
-  }
-
+const types = fetchData('types', []);
+for (const type of types) {
   const button = document.createElement('button');
-  button.textContent = '+';
+  button.textContent = type;
   button.addEventListener('click', () => {
-    const name = prompt('Name');
-    if (!name) {
+    const slots = [...getSelection()];
+
+    // Mark slots this type if there is a selection, otherwise skip to edit mode
+    if (slots.length > 0) {
+      for (const slot of slots) {
+        storeData(slot, data => data.type = type);
+      }
+
+      clearSelection();
+      render();
       return;
     }
 
-    const type = { name };
-    _type = type;
-    types.push(type);
-    localStorage.setItem('typeIndex', types.length - 1);
-    localStorage.setItem('types', JSON.stringify(types));
-    renderTypes();
-
-    const input = document.createElement('input');
-    input.type = 'color';
-
-    // Note that `input` is used over `change` to not default to black on Esc
-    input.addEventListener('input', () => {
-      type.color = input.value;
-      localStorage.setItem('types', JSON.stringify(types));
-      renderTypes();
-
-      input.remove();
-    });
-
-    input.click();
+    typeDialog.className = 'update';
+    typeDialog.showModal();
+    nameInput.value = type;
+    nameInput.dataset['name'] = type;
   });
 
-  typeDiv.append(button);
+  const span = document.createElement('span');
+  span.style.background = calculateColor(type);
+
+  button.prepend(span);
+
+  document.body.append(button);
 }
 
-renderTypes();
+const button = document.createElement('button');
+button.textContent = '+';
+button.addEventListener('click', () => {
+  typeDialog.className = 'create';
+  typeDialog.showModal();
+  nameInput.value = '';
+});
 
-for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-  const tr = document.createElement('tr');
+document.body.append(button);
 
-  const th = document.createElement('th');
-  th.textContent = days[dayIndex];
-  tr.draggable = false;
-  tr.append(th);
-
-  for (let slotIndex = 0; slotIndex < 24 * 60 / 10; slotIndex++) {
-    const td = document.createElement('td');
-    const data = localStorage.getItem(dayIndex + '/' + slotIndex);
-    if (data) {
-      const type = JSON.parse(data);
-      td.style.background = type.color;
+typeForm.addEventListener('submit', () => {
+  switch (typeDialog.className) {
+    case 'create': {
+      storeData('types', types => types.push(nameInput.value), []);
+      location.reload();
+      break;
     }
-
-    td.addEventListener('mousedown', event => {
-      if (!_type || event.buttons !== 1) {
-        return;
+    case 'update': {
+      const type = nameInput.dataset['name'];
+      for (const date of iterateDates()) {
+        for (const slot of iterateSlots(date)) {
+          const data = fetchData(slot, {});
+          if (data.type === type) {
+            storeData(slot, data => data.type = nameInput.value);
+          }
+        }
       }
 
-      td.style.background = _type.color ?? 'none';
-      localStorage.setItem(dayIndex + '/' + slotIndex, JSON.stringify(_type));
-    });
+      storeData('types', types => {
+        types.splice(types.indexOf(type), 1);
+        types.push(nameInput.value);
+      }, []);
 
-    td.addEventListener('mousemove', event => {
-      if (!_type || event.buttons !== 1) {
-        return;
+      location.reload();
+      break;
+    }
+    default: {
+      throw new Error('Expected create or update class name!');
+    }
+  }
+});
+
+const deleteButton = document.querySelector('#deleteButton');
+deleteButton.addEventListener('click', event => {
+  const type = nameInput.dataset['name'];
+  for (const date of iterateDates()) {
+    for (const slot of iterateSlots(date)) {
+      const data = fetchData(slot, {});
+      if (data.type === type) {
+        storeData(slot, data => data.type = null);
       }
-
-      td.style.background = _type.color ?? 'none';
-      localStorage.setItem(dayIndex + '/' + slotIndex, JSON.stringify(_type));
-    });
-
-    td.addEventListener('mouseover', () => {
-      const hours = ~~(slotIndex * 10 / 60);
-      const minutes = slotIndex * 10 - hours * 60;
-      const from = hours.toString().padStart(2, 0) + ':' + minutes.toString().padStart(2, 0);
-      const to = hours.toString().padStart(2, 0) + ':' + (minutes + 10).toString().padStart(2, 0);
-      slotDiv.textContent = `${days[dayIndex]} ${from}-${to}`;
-      const data = localStorage.getItem(dayIndex + '/' + slotIndex);
-      if (data) {
-        const type = JSON.parse(data);
-        const span = document.createElement('span');
-        span.textContent = type.name;
-        span.style.color = type.color;
-        slotDiv.append(' ', span);
-      }
-    });
-
-    td.addEventListener('mouseout', () => slotDiv.textContent = '');
-
-    tr.append(td);
+    }
   }
 
-  table.append(tr);
-}
+  storeData('types', types => {
+    types.splice(types.indexOf(type), 1);
+  }, []);
+
+  event.preventDefault();
+  location.reload();
+});

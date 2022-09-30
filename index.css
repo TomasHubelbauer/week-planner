@@ -2,18 +2,28 @@ body {
   font: icon;
 }
 
+body>div {
+  display: flex;
+  gap: 1em;
+}
+
+#slotsSpan {
+  color: gray;
+}
+
+#slotSpan {
+  flex: 1;
+}
+
 table {
   border: 1px solid gray;
+  margin-block: 1em;
   width: 100%;
   user-select: none;
 }
 
 caption {
   caption-side: bottom;
-}
-
-caption>div {
-  margin: 1em;
 }
 
 tr:hover {
@@ -28,29 +38,38 @@ td {
   border: 1px solid silver;
 }
 
-label {
-  background: whitesmoke;
-  border-radius: 2px;
-  margin: 0 1ex;
-  padding: 1ex 0;
-  word-spacing: 1ex;
-}
-
-label>span {
-  cursor: pointer;
-  margin: 0 1ex;
-}
-
-label:has(input:checked)>span {
-  cursor: text;
-}
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+td.selected {
+  outline: 1px solid black;
 }
 
 a {
   text-decoration: none;
+}
+
+button {
+  align-items: center;
+  display: inline-flex;
+  gap: .5ch;
+}
+
+button>span {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: inline-block;
+  height: 1ch;
+  outline: 1px solid gray;
+}
+
+dialog>form {
+  display: flex;
+  flex-direction: column;
+  gap: 1ch;
+}
+
+dialog:not(.update) #deleteButton {
+  display: none;
+}
+
+button[type="submit"] {
+  display: none;
 }

@@ -9,13 +9,19 @@
     <script src="./index.js" type="module"></script>
   </head>
   <body>
-    <table draggable="false">
-      <caption>
-        <div>Week Planner</div>
-        <div id="typeDiv"></div>
-        <div id="slotDiv"></div>
-      </caption>
-    </table>
-    <a target="_blank" href="https://github.com/TomasHubelbauer/week-planner">GitHub</a>
+    <div>
+      <span id="slotsSpan"></span>
+      <span id="slotSpan"></span>
+      <a target="_blank" href="https://github.com/TomasHubelbauer/week-planner">GitHub</a>
+    </div>
+    <table draggable="false"></table>
+    <dialog id="typeDialog">
+      <form method="dialog" id="typeForm">
+        <label>Name:</label>
+        <input placeholder="name" id="nameInput" />
+        <button type="submit"></button>
+        <button id="deleteButton">Delete</button>
+      </form>
+    </dialog>
   </body>
 </html>
