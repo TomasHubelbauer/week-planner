@@ -90,3 +90,9 @@ The improvements I have in mind are kept in this readme.
 
   The tests will make it possible to mock the DOM elements and ensure the right
   DOM operations are called on them by the individual flows.
+
+- [ ] Implement a single step undo
+
+  I don't think an undo stack is necessary, but it would be nice to be able to
+  fix mistakes spotted right away.
+  Undo multiple slots if the last action was to paint all of them in one stroke.
