@@ -78,3 +78,8 @@ The improvements I have in mind are kept in this readme.
 - [ ] Associate event listeners weakly to avoid memory leaks
 
   Right now I am leaking data all over the place.
+
+- [ ] Generate the screenshot in a GitHub Actions workflow and push it to readme
+
+  I added the screenshot manually but it is already out of date, so let's make
+  that automatic.
