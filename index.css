@@ -11,6 +11,10 @@ body>div {
   color: gray;
 }
 
+#slotsSpan:empty {
+  display: none;
+}
+
 #slotSpan {
   flex: 1;
 }
