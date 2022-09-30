@@ -96,3 +96,9 @@ The improvements I have in mind are kept in this readme.
   I don't think an undo stack is necessary, but it would be nice to be able to
   fix mistakes spotted right away.
   Undo multiple slots if the last action was to paint all of them in one stroke.
+
+- [ ] Use https://github.com/TomasHubelbauer/github-pages-local-storage
+
+  This will ensure that the local storage as used by this app remains isolated
+  from local storage as seen by other apps on the same origin, i.e. my other
+  apps running on GitHub Pages.
