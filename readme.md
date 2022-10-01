@@ -98,3 +98,9 @@ The improvements I have in mind are kept in this readme.
   one to pick something already used before quickly.
   By using a `datalist`, I will get the freedom of free-form but also the speed
   of pre-filled.
+
+- [ ] Make statistics spans clickable to select all of their respective slots
+
+  Clicking on a span in the statistics section in the `caption` should either
+  select all of those slots making up the statistic or maybe list them out
+  below the table as ranges (collapse neighboring slots into a single range).
