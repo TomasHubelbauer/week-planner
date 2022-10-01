@@ -46,6 +46,11 @@ td.selected {
   outline: 1px solid black;
 }
 
+/* Note that the `2` in here is to account for the offset caused by the `th` */
+td:nth-child(6n + 2) {
+  border: 1px solid gray;
+}
+
 a {
   text-decoration: none;
 }
