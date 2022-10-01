@@ -43,6 +43,8 @@ table.addEventListener('mouseup', () => {
 export default function render() {
   table.replaceChildren();
 
+  const types = {};
+
   for (const date of iterateDates()) {
     const tr = document.createElement('tr');
 
@@ -56,7 +58,10 @@ export default function render() {
       const data = fetchData(slot, {});
       td.classList.toggle('selected', data.isSelected === true);
       if (data.type) {
-        td.style.background = calculateColor(data.type);
+        const type = data.type.split(' ')[0];
+        td.style.background = calculateColor(type);
+        types[type] ??= 0;
+        types[type]++;
       }
 
       // Support single-click selection
@@ -104,4 +109,18 @@ export default function render() {
 
     table.append(tr);
   }
+
+  const caption = document.createElement('caption');
+  for (const [type, slots] of Object.entries(types)) {
+    let minutes = slots * slotDurationMinutes;
+    const hours = ~~(minutes / 60);
+    minutes -= hours * 60;
+
+    const span = document.createElement('span');
+    span.style.borderColor = calculateColor(type);
+    span.textContent = `${type} (${hours.toString().padStart(2, 0)}:${minutes.toString().padStart(2, 0)})`;
+    caption.append(span);
+  }
+
+  table.append(caption);
 }

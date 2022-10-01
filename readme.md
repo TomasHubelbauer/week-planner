@@ -97,8 +97,6 @@ The improvements I have in mind are kept in this readme.
   This will help track good habits that are neglected or bad habits that are
   indulged.
 
-- [ ] Collect and display verb statistics
-
 - [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
 
   The `prompt` is a good and easy free form input solution, but it doesn't allow
