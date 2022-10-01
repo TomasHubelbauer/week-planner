@@ -104,3 +104,15 @@ The improvements I have in mind are kept in this readme.
   Clicking on a span in the statistics section in the `caption` should either
   select all of those slots making up the statistic or maybe list them out
   below the table as ranges (collapse neighboring slots into a single range).
+
+  Or maybe, make this action display a menu: for selecting the slots, listing
+  them, setting the minimum and maximum for the verb and allowing the verb to
+  get marked as hidden in the stats to be able to clean up the caption and
+  display only the stuff I am interested in looking up the stats for.
+  An alternative to explicit show/hide flag would be to treat whether a verb has
+  defined minimum and maximum as that flag.
+
+- [ ] Make the duration displayed in the statistics spans gray color
+
+  Right now it doesn't look that good with the text and the number being the
+  same color.
