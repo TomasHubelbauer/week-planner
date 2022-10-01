@@ -25,6 +25,13 @@ Shows single week of 10-minute slots which can be annotated with activity types.
 
 Allows for single and multiple slot selection (via clicking or dragging).
 
+Allows setting minimal and maximal expected time spent on the activity types.
+
+Allows hiding activity types in the overall statistics.
+
+Displays statistics of each activity type - time spent on it and whether it is
+under or over the configured minimum/maximum.
+
 ## Roadmap
 
 There are no updates planned.
@@ -88,10 +95,7 @@ The improvements I have in mind are kept in this readme.
   By using a `datalist`, I will get the freedom of free-form but also the speed
   of pre-filled.
 
-- [ ] Display minimum, maximum and visibility settings when in verb focus mode
+- [ ] Accept `hh:mm` format in the minimum and maximum fields
 
-  Add new UI atop the range list `ul` showing the controls for the minimal and
-  maximal expected time for the focus type and a toggle for whether the focus
-  type should be showing in the statistics or not.
-  In edit mode, display all types (including hidden ones) so that the hidden
-  types can be selected and unhidden.
+  Right now the placeholder says it expects that but I am saving the value as
+  the number of minutes.

@@ -9,6 +9,10 @@ import storeData from './storeData.js';
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const table = document.querySelector('table');
+const typeDiv = document.querySelector('#typeDiv');
+const minimumInput = document.querySelector('#minimumInput');
+const maximumInput = document.querySelector('#maximumInput');
+const visibleInput = document.querySelector('#visibleInput');
 
 let focusType;
 
@@ -48,6 +52,18 @@ table.addEventListener('mouseup', () => {
   }
 
   render();
+});
+
+minimumInput.addEventListener('input', () => {
+  storeData(typeDiv.dataset['type'], data => data.minimum = minimumInput.value, {});
+});
+
+maximumInput.addEventListener('input', () => {
+  storeData(typeDiv.dataset['type'], data => data.maximum = maximumInput.value, {});
+});
+
+visibleInput.addEventListener('change', () => {
+  storeData(typeDiv.dataset['type'], data => data.visible = visibleInput.checked, {});
 });
 
 export default function render() {
@@ -127,6 +143,11 @@ export default function render() {
 
   const caption = document.createElement('caption');
   for (const type of Object.keys(types).sort()) {
+    const data = fetchData(type, {});
+    if (data.visible === false && !focusType) {
+      continue;
+    }
+
     const slots = types[type];
 
     const span = document.createElement('span');
@@ -140,9 +161,17 @@ export default function render() {
 
       if (focusType === type) {
         focusType = undefined;
+        delete typeDiv.dataset['type'];
       }
       else {
         focusType = type;
+        typeDiv.dataset['type'] = type;
+
+        const data = fetchData(type, {});
+        minimumInput.value = data.minimum ?? '';
+        maximumInput.value = data.maximum ?? '';
+        visibleInput.checked = data.visible ?? true;
+
         const slots = [];
         for (const date of iterateDates()) {
           for (const slot of iterateSlots(date)) {
@@ -171,6 +200,15 @@ export default function render() {
     time.textContent = `${hours.toString().padStart(2, 0)}:${minutes.toString().padStart(2, 0)}`;
 
     span.append(time);
+
+    if (data.minimum && data.minimum > slots * slotDurationMinutes) {
+      span.append(`${data.minimum - slots * slotDurationMinutes} m under `);
+    }
+
+    if (data.maximum && data.maximum < slots * slotDurationMinutes) {
+      span.append(`${slots * slotDurationMinutes - data.maximum} m over `);
+    }
+
     caption.append(span);
   }
 
