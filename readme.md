@@ -83,3 +83,8 @@ The improvements I have in mind are kept in this readme.
 
   I added the screenshot manually but it is already out of date, so let's make
   that automatic.
+
+- [ ] Give the hour-start slots a darker border for better visual navigation
+
+  I think this should work; for every 4th (including 0th) slot, make their
+  border gray instead of silver.
