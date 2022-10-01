@@ -85,5 +85,5 @@ export default function render() {
     table.append(tr);
   }
 
-  table.addEventListener('mouseup', () => render());
+  table.addEventListener('mouseup', render);
 }
