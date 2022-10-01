@@ -21,7 +21,6 @@ export default function render() {
     slotsSpan.textContent = `${slots.length} slot${slots.length > 1 ? 's' : ''}`;
   }
 
-  const types = fetchData('types', []);
   for (const date of iterateDates()) {
     const tr = document.createElement('tr');
 
