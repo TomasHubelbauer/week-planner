@@ -31,6 +31,7 @@ table.addEventListener('mouseup', () => {
     return;
   }
 
+  // TODO: Display the individual ranges, not the slot count or the slots
   const type = prompt(`Type (${slots.length} slots):`);
   if (type !== null && !type.split(' ')[0].endsWith('ing')) {
     alert('The first word of the annotation is not a continuous time verb!');
