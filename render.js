@@ -10,6 +10,7 @@ import storeData from './storeData.js';
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const table = document.querySelector('table');
+table.addEventListener('mouseup', render);
 
 export default function render() {
   table.replaceChildren();
@@ -84,6 +85,4 @@ export default function render() {
 
     table.append(tr);
   }
-
-  table.addEventListener('mouseup', render);
 }
