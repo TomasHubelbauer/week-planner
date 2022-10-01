@@ -1,4 +1,5 @@
 import calculateColor from './calculateColor.js';
+import calculateRanges from './calculateRanges.js';
 import fetchData from './fetchData.js';
 import iterateDates from './iterateDates.js';
 import iterateSlots from './iterateSlots.js';
@@ -31,9 +32,9 @@ table.addEventListener('mouseup', () => {
     return;
   }
 
-  // TODO: Display the individual ranges, not the slot count or the slots
-  const type = prompt(`Type (${slots.length} slots):`);
-  if (type !== null && !type.split(' ')[0].endsWith('ing')) {
+  const ranges = calculateRanges(slots).map(range => range.name);
+  const type = prompt(`Type ${ranges}:`);
+  if (type !== null && !type.split(' ', 2)[0].endsWith('ing')) {
     alert('The first word of the annotation is not a continuous time verb!');
   }
 
@@ -43,7 +44,7 @@ table.addEventListener('mouseup', () => {
       if (type) {
         data.type = type;
       }
-    });
+    }, {});
   }
 
   render();
@@ -67,7 +68,7 @@ export default function render() {
       const data = fetchData(slot, {});
       td.classList.toggle('selected', data.isSelected === true);
       if (data.type) {
-        const type = data.type.split(' ')[0];
+        const type = data.type.split(' ', 2)[0];
         types[type] ??= 0;
         types[type]++;
 
@@ -134,7 +135,31 @@ export default function render() {
     span.textContent = type;
 
     span.addEventListener('click', () => {
-      focusType = focusType === type ? undefined : type;
+      const rangeUl = document.querySelector('#rangeUl');
+      rangeUl.replaceChildren();
+
+      if (focusType === type) {
+        focusType = undefined;
+      }
+      else {
+        focusType = type;
+        const slots = [];
+        for (const date of iterateDates()) {
+          for (const slot of iterateSlots(date)) {
+            const data = fetchData(slot, {});
+            if (data.type?.split(' ', 2)[0] === type) {
+              slots.push(slot);
+            }
+          }
+        }
+
+        for (const range of calculateRanges(slots)) {
+          const li = document.createElement('li');
+          li.textContent = range.name;
+          rangeUl.append(li);
+        }
+      }
+
       render();
     });
 

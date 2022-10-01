@@ -88,19 +88,10 @@ The improvements I have in mind are kept in this readme.
   By using a `datalist`, I will get the freedom of free-form but also the speed
   of pre-filled.
 
-- [ ] Make statistics span clicks present a menu of their options
+- [ ] Display minimum, maximum and visibility settings when in verb focus mode
 
-  Right now, clicking a statistics span focuses the table and makes it readonly.
-  But there are a couple more options to present and behaviors to execute:
-  - List out the selected slot ranges under the table
-  
-    Combine neighboring slots into one range in order to not list all slots.
-
-  - Display an option / a modal for setting the desired minimum/maximum time
-
-    This will help track good neglected habits and bad indulged habits.
-    Store the minimum/maximum object under the verb name in the local storage.
-    
-  - Display an option / a toggle for showing or hiding the verb in statistics
-
-    Alternatively, use the presence of minimum/maximum to indicate visibility.
+  Add new UI atop the range list `ul` showing the controls for the minimal and
+  maximal expected time for the focus type and a toggle for whether the focus
+  type should be showing in the statistics or not.
+  In edit mode, display all types (including hidden ones) so that the hidden
+  types can be selected and unhidden.
