@@ -127,7 +127,9 @@ export default function render() {
   }
 
   const caption = document.createElement('caption');
-  for (const [type, slots] of Object.entries(types)) {
+  for (const type of Object.keys(types).sort()) {
+    const slots = types[type];
+
     const span = document.createElement('span');
     span.style.borderColor = calculateColor(type);
     span.classList.toggle('focused', focusType === type);
