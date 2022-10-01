@@ -28,6 +28,10 @@ table.addEventListener('mouseup', () => {
   }
 
   const type = prompt('Type:');
+  if (type !== null && !type.split(' ')[0].endsWith('ing')) {
+    alert('The first word of the annotation is not a continuous time verb!');
+  }
+
   for (const slot of slots) {
     storeData(slot, data => {
       data.isSelected = false;

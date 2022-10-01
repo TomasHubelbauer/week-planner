@@ -86,16 +86,11 @@ The improvements I have in mind are kept in this readme.
   When multiple slots in a row are annoated the same thing, display either both
   or just the range from the first slot's start to the last slot's end.
 
-- [ ] Enforce that the first word of the activity type is a continuous verb
+- [ ] Allow specifying desired minimal and maximal amount of time for each verb
 
-  I'd like all of the annotations to be in the form of *do**ing** something*.
-  This way, I can collect the verbs (the first words) of the annotations and
-  present information about how much time is accounted for for each verb.
-  To add habit building UI later, I could have a separate UI where for each
-  verb I would add either minimal desired time or maximal desired time or both
-  for each verb.
   This will help track good habits that are neglected or bad habits that are
   indulged.
+  Do it probably by storing this information in the storage under the verb name.
 
 - [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
 
