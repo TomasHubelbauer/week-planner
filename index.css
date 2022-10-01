@@ -7,14 +7,6 @@ body>div {
   gap: 1em;
 }
 
-#slotsSpan {
-  color: gray;
-}
-
-#slotsSpan:empty {
-  display: none;
-}
-
 #slotSpan {
   flex: 1;
 }

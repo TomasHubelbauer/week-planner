@@ -27,14 +27,11 @@ table.addEventListener('mouseup', () => {
     }
   }
 
-  const slotsSpan = document.querySelector('#slotsSpan');
-  slotsSpan.textContent = `${slots.length} slot${slots.length > 1 ? 's' : ''}`;
-
   if (slots.length === 0) {
     return;
   }
 
-  const type = prompt('Type:');
+  const type = prompt(`Type (${slots.length} slots):`);
   if (type !== null && !type.split(' ')[0].endsWith('ing')) {
     alert('The first word of the annotation is not a continuous time verb!');
   }

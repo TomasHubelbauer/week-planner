@@ -81,11 +81,6 @@ The improvements I have in mind are kept in this readme.
 
   This will make it easy to spot and annotate fast.
 
-- [ ] Display the whole range of like inline slots not one slot in `#slotsDiv`
-
-  When multiple slots in a row are annotated the same thing, display either both
-  or just the range from the first slot's start to the last slot's end.
-
 - [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
 
   The `prompt` is a good and easy free form input solution, but it doesn't allow
