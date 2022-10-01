@@ -21,16 +21,9 @@ https://tomashubelbauer.github.io/week-planner
 
 ## Features
 
-Shows single week of 10-minute slots which can be associated to an activity.
-
-Allows for creation of named activities using the `+` button.
+Shows single week of 10-minute slots which can be annotated with activity types.
 
 Allows for single and multiple slot selection (via clicking or dragging).
-
-Allows removing activities using the `-` button.
-
-Allows renaming activities by clicking on the activity button when there is no
-selection.
 
 ## Roadmap
 
@@ -83,3 +76,32 @@ The improvements I have in mind are kept in this readme.
 
   I added the screenshot manually but it is already out of date, so let's make
   that automatic.
+
+- [ ] Select the current slot when the tab gains focus
+
+  This will make it easy to spot and annotate fast.
+
+- [ ] Display the whole span of like inline slots instead of the single slot
+
+  When multiple slots in a row are annoated the same thing, display either both
+  or just the range from the first slot's start to the last slot's end.
+
+- [ ] Enforce that the first word of the activity type is a continuous verb
+
+  I'd like all of the annotations to be in the form of *do**ing** something*.
+  This way, I can collect the verbs (the first words) of the annotations and
+  present information about how much time is accounted for for each verb.
+  To add habit building UI later, I could have a separate UI where for each
+  verb I would add either minimal desired time or maximal desired time or both
+  for each verb.
+  This will help track good habits that are neglected or bad habits that are
+  indulged.
+
+- [ ] Collect and display verb statistics
+
+- [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
+
+  The `prompt` is a good and easy free form input solution, but it doesn't allow
+  one to pick something already used before quickly.
+  By using a `datalist`, I will get the freedom of free-form but also the speed
+  of pre-filled.

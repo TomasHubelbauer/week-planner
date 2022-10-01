@@ -1,7 +1,5 @@
 import calculateColor from './calculateColor.js';
-import clearSelection from './clearSelection.js';
 import fetchData from './fetchData.js';
-import getSelection from './getSelection.js';
 import iterateDates from './iterateDates.js';
 import iterateSlots from './iterateSlots.js';
 import slotDurationMinutes from './slotDurationMinutes.js';
@@ -10,16 +8,40 @@ import storeData from './storeData.js';
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const table = document.querySelector('table');
-table.addEventListener('mouseup', render);
+
+table.addEventListener('mouseup', () => {
+  const slots = [];
+  for (const date of iterateDates()) {
+    for (const slot of iterateSlots(date)) {
+      const data = fetchData(slot, {});
+      if (data.isSelected) {
+        slots.push(slot);
+      }
+    }
+  }
+
+  const slotsSpan = document.querySelector('#slotsSpan');
+  slotsSpan.textContent = `${slots.length} slot${slots.length > 1 ? 's' : ''}`;
+
+  if (slots.length === 0) {
+    return;
+  }
+
+  const type = prompt('Type:');
+  for (const slot of slots) {
+    storeData(slot, data => {
+      data.isSelected = false;
+      if (type) {
+        data.type = type;
+      }
+    });
+  }
+
+  render();
+});
 
 export default function render() {
   table.replaceChildren();
-
-  const slots = [...getSelection()];
-  if (slots.length > 0) {
-    const slotsSpan = document.querySelector('#slotsSpan');
-    slotsSpan.textContent = `${slots.length} slot${slots.length > 1 ? 's' : ''}`;
-  }
 
   for (const date of iterateDates()) {
     const tr = document.createElement('tr');
@@ -42,8 +64,6 @@ export default function render() {
         if (event.buttons !== 1) {
           return;
         }
-
-        clearSelection();
 
         td.classList.toggle('selected', true);
         storeData(slot, data => data.isSelected = true, {});

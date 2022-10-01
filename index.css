@@ -26,10 +26,6 @@ table {
   user-select: none;
 }
 
-caption {
-  caption-side: bottom;
-}
-
 tr:hover {
   background: silver;
 }
@@ -53,32 +49,4 @@ td:nth-child(6n + 2) {
 
 a {
   text-decoration: none;
-}
-
-button {
-  align-items: center;
-  display: inline-flex;
-  gap: .5ch;
-}
-
-button>span {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  display: inline-block;
-  height: 1ch;
-  outline: 1px solid gray;
-}
-
-dialog>form {
-  display: flex;
-  flex-direction: column;
-  gap: 1ch;
-}
-
-dialog:not(.update) #deleteButton {
-  display: none;
-}
-
-button[type="submit"] {
-  display: none;
 }
