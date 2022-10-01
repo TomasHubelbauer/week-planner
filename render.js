@@ -116,13 +116,18 @@ export default function render() {
 
   const caption = document.createElement('caption');
   for (const [type, slots] of Object.entries(types)) {
+    const span = document.createElement('span');
+    span.style.borderColor = calculateColor(type);
+    span.textContent = type;
+
     let minutes = slots * slotDurationMinutes;
     const hours = ~~(minutes / 60);
     minutes -= hours * 60;
 
-    const span = document.createElement('span');
-    span.style.borderColor = calculateColor(type);
-    span.textContent = `${type} (${hours.toString().padStart(2, 0)}:${minutes.toString().padStart(2, 0)})`;
+    const time = document.createElement('time');
+    time.textContent = `${hours.toString().padStart(2, 0)}:${minutes.toString().padStart(2, 0)}`;
+
+    span.append(time);
     caption.append(span);
   }
 

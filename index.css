@@ -28,14 +28,19 @@ table {
 
 caption {
   caption-side: bottom;
-  padding: 1ch;
+  padding: 1em;
 }
 
 caption>span {
-  border: 1px solid;
-  border-left-width: 1ch;
-  margin: 1ch;
-  padding-inline: 1ch .5ch;
+  border-left: 1em solid;
+  margin: 1ex;
+  outline: 1px solid gray;
+  padding-left: 1ex;
+}
+
+caption>span>time {
+  color: gray;
+  margin: 1ex;
 }
 
 tr:hover {

@@ -111,8 +111,3 @@ The improvements I have in mind are kept in this readme.
   display only the stuff I am interested in looking up the stats for.
   An alternative to explicit show/hide flag would be to treat whether a verb has
   defined minimum and maximum as that flag.
-
-- [ ] Make the duration displayed in the statistics spans gray color
-
-  Right now it doesn't look that good with the text and the number being the
-  same color.
