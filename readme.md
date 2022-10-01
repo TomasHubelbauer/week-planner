@@ -77,20 +77,14 @@ The improvements I have in mind are kept in this readme.
   I added the screenshot manually but it is already out of date, so let's make
   that automatic.
 
-- [ ] Select the current slot when the tab gains focus
+- [ ] Select the current slot when the browser tab gains focus
 
   This will make it easy to spot and annotate fast.
 
-- [ ] Display the whole span of like inline slots instead of the single slot
+- [ ] Display the whole range of like inline slots not one slot in `#slotsDiv`
 
-  When multiple slots in a row are annoated the same thing, display either both
+  When multiple slots in a row are annotated the same thing, display either both
   or just the range from the first slot's start to the last slot's end.
-
-- [ ] Allow specifying desired minimal and maximal amount of time for each verb
-
-  This will help track good habits that are neglected or bad habits that are
-  indulged.
-  Do it probably by storing this information in the storage under the verb name.
 
 - [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
 
@@ -99,15 +93,19 @@ The improvements I have in mind are kept in this readme.
   By using a `datalist`, I will get the freedom of free-form but also the speed
   of pre-filled.
 
-- [ ] Make statistics spans clickable to select all of their respective slots
+- [ ] Make statistics span clicks present a menu of their options
 
-  Clicking on a span in the statistics section in the `caption` should either
-  select all of those slots making up the statistic or maybe list them out
-  below the table as ranges (collapse neighboring slots into a single range).
+  Right now, clicking a statistics span focuses the table and makes it readonly.
+  But there are a couple more options to present and behaviors to execute:
+  - List out the selected slot ranges under the table
+  
+    Combine neighboring slots into one range in order to not list all slots.
 
-  Or maybe, make this action display a menu: for selecting the slots, listing
-  them, setting the minimum and maximum for the verb and allowing the verb to
-  get marked as hidden in the stats to be able to clean up the caption and
-  display only the stuff I am interested in looking up the stats for.
-  An alternative to explicit show/hide flag would be to treat whether a verb has
-  defined minimum and maximum as that flag.
+  - Display an option / a modal for setting the desired minimum/maximum time
+
+    This will help track good neglected habits and bad indulged habits.
+    Store the minimum/maximum object under the verb name in the local storage.
+    
+  - Display an option / a toggle for showing or hiding the verb in statistics
+
+    Alternatively, use the presence of minimum/maximum to indicate visibility.

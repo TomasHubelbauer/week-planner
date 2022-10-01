@@ -33,13 +33,19 @@ caption {
 
 caption>span {
   border-left: 1em solid;
+  color: gray;
+  cursor: pointer;
   margin: 1ex;
   outline: 1px solid gray;
   padding-left: 1ex;
 }
 
+caption>span.focused {
+  color: black;
+}
+
 caption>span>time {
-  color: gray;
+  color: silver;
   margin: 1ex;
 }
 

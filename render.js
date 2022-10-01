@@ -9,7 +9,14 @@ const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 
 const table = document.querySelector('table');
 
+let focusType;
+
 table.addEventListener('mouseup', () => {
+  // Ignore selection-end events in readonly/focus mode
+  if (focusType) {
+    return;
+  }
+
   const slots = [];
   for (const date of iterateDates()) {
     for (const slot of iterateSlots(date)) {
@@ -63,14 +70,18 @@ export default function render() {
       td.classList.toggle('selected', data.isSelected === true);
       if (data.type) {
         const type = data.type.split(' ')[0];
-        td.style.background = calculateColor(type);
         types[type] ??= 0;
         types[type]++;
+
+        if (!focusType || type === focusType) {
+          td.style.background = calculateColor(type);
+        }
       }
 
       // Support single-click selection
       td.addEventListener('mousedown', event => {
-        if (event.buttons !== 1) {
+        // Ensure left-click is pressed and table is not in readonly/focus mode
+        if (event.buttons !== 1 || focusType) {
           return;
         }
 
@@ -80,7 +91,8 @@ export default function render() {
 
       // Support drag multi-selection
       td.addEventListener('mousemove', event => {
-        if (event.buttons !== 1) {
+        // Ensure left-click is pressed and table is not in readonly/focus mode
+        if (event.buttons !== 1 || focusType) {
           return;
         }
 
@@ -118,7 +130,13 @@ export default function render() {
   for (const [type, slots] of Object.entries(types)) {
     const span = document.createElement('span');
     span.style.borderColor = calculateColor(type);
+    span.classList.toggle('focused', focusType === type);
     span.textContent = type;
+
+    span.addEventListener('click', () => {
+      focusType = focusType === type ? undefined : type;
+      render();
+    });
 
     let minutes = slots * slotDurationMinutes;
     const hours = ~~(minutes / 60);
