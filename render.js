@@ -42,6 +42,14 @@ table.addEventListener('mouseup', () => {
   if (ranges.length > 0) {
     rangeDiv.textContent = ranges;
   }
+  else if (slots.length === 1) {
+    const _slot = new Date(slots[0]);
+    _slot.setMinutes(_slot.getMinutes() + slotDurationMinutes);
+    const from = slots[0].toISOString().slice('yyyy-mm-dd '.length, 'yyyy-mm-dd hh:mm'.length);
+    const to = _slot.toISOString().slice('yyyy-mm-dd '.length, 'yyyy-mm-dd hh:mm'.length);
+
+    rangeDiv.textContent = `${dayNames[_slot.getDay()]} ${from}-${to}`;
+  }
   else {
     rangeDiv.textContent = '';
   }
