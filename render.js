@@ -13,6 +13,7 @@ const table = document.querySelector('table');
 const slotDiv = document.querySelector('#slotDiv');
 const rangeDiv = document.querySelector('#rangeDiv');
 const typeInput = document.querySelector('#typeInput');
+const typeDatalist = document.querySelector('#typeDatalist');
 const typeDiv = document.querySelector('#typeDiv');
 const minimumInput = document.querySelector('#minimumInput');
 const maximumInput = document.querySelector('#maximumInput');
@@ -60,6 +61,21 @@ table.addEventListener('mouseup', () => {
   }
   else {
     typeInput.value = '';
+  }
+
+  typeDatalist.replaceChildren();
+  const allTypes = [];
+  for (const slot of getAllSlots()) {
+    const data = fetchData(slot, {});
+    if (data.type) {
+      allTypes.push(data.type);
+    }
+  }
+
+  for (const type of allTypes.filter((type, index, array) => array.indexOf(type) === index)) {
+    const option = document.createElement('option');
+    option.text = type;
+    typeDatalist.append(option);
   }
 
   slotDiv.style.display = 'initial';

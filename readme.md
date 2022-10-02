@@ -88,8 +88,6 @@ The improvements I have in mind are kept in this readme.
 
   This will make it easy to spot and annotate fast.
 
-- [ ] Pre-fill `datalist` of existing types on `#typeInput`
-
 - [ ] Accept `hh:mm` format in the minimum and maximum fields
 
   Right now the placeholder says it expects that but I am saving the value as
