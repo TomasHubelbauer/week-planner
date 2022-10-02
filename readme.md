@@ -1,5 +1,7 @@
 # Week Planner
 
+[![.github/workflows/main.yml](https://github.com/TomasHubelbauer/week-planner/actions/workflows/main.yml/badge.svg)](https://github.com/TomasHubelbauer/week-planner/actions/workflows/main.yml)
+
 This repository hosts a simple web application for graphical week planning.
 The application runs directly off an HTML file and has no backend.
 Persistence is taken care of using the local storage API.
