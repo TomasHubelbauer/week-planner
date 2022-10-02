@@ -11,7 +11,10 @@ function makeEvent(name, data) {
   return event;
 }
 
-if (location.hash === '#demo') {
+// Check whether a flag file exists signalling the demo experience should engage
+try {
+  await import('./demo.js');
+
   // Clear the local storage for local development, it is always empty on the CI
   localStorage.clear();
 
@@ -44,4 +47,7 @@ if (location.hash === '#demo') {
   }
 
   document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()}`;
+}
+catch (error) {
+
 }
