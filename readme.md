@@ -99,3 +99,7 @@ The improvements I have in mind are kept in this readme.
 
   Right now the placeholder says it expects that but I am saving the value as
   the number of minutes.
+
+- [ ] Implement arrows for flipping between weeks
+
+  This way past data can still be reachable.
