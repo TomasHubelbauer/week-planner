@@ -11,7 +11,7 @@ function makeEvent(name, data) {
   return event;
 }
 
-if (location.search === '?demo') {
+if (location.hash === '#demo') {
   // Clear the local storage for local development, it is always empty on the CI
   localStorage.clear();
 
