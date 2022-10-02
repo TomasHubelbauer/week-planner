@@ -46,7 +46,7 @@ try {
     typeInput.dispatchEvent(makeEvent('keydown', { key: 'Enter' }));
   }
 
-  document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()}`;
+  document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()} ${JSON.stringify(location)}`;
 }
 catch (error) {
 
