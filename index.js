@@ -42,4 +42,6 @@ if (location.search === '?demo') {
     typeInput.value = 'coding';
     typeInput.dispatchEvent(makeEvent('keydown', { key: 'Enter' }));
   }
+
+  document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()}`;
 }
