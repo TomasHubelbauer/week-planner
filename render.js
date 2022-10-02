@@ -1,6 +1,7 @@
 import calculateColor from './calculateColor.js';
 import calculateRanges from './calculateRanges.js';
 import fetchData from './fetchData.js';
+import getAllSlots from './getSelection.js';
 import iterateDates from './iterateDates.js';
 import iterateSlots from './iterateSlots.js';
 import slotDurationMinutes from './slotDurationMinutes.js';
@@ -23,12 +24,10 @@ table.addEventListener('mouseup', () => {
   }
 
   const slots = [];
-  for (const date of iterateDates()) {
-    for (const slot of iterateSlots(date)) {
-      const data = fetchData(slot, {});
-      if (data.isSelected) {
-        slots.push(slot);
-      }
+  for (const slot of getAllSlots()) {
+    const data = fetchData(slot, {});
+    if (data.isSelected) {
+      slots.push(slot);
     }
   }
 
@@ -116,17 +115,27 @@ export default function render() {
       });
 
       td.addEventListener('mouseover', () => {
+        const data = fetchData(slot);
+
         const _slot = new Date(slot);
         _slot.setMinutes(_slot.getMinutes() + slotDurationMinutes);
         const from = slot.toISOString().slice('yyyy-mm-dd '.length, 'yyyy-mm-dd hh:mm'.length);
         const to = _slot.toISOString().slice('yyyy-mm-dd '.length, 'yyyy-mm-dd hh:mm'.length);
-
         const slotSpan = document.querySelector('#slotSpan');
         slotSpan.textContent = `${dayNames[date.getDay()]} ${from}-${to}`;
 
-        const data = fetchData(slot);
+        const slots = [];
         if (data && data.type) {
-          slotSpan.append(' ', data.type);
+          for (const slot of getAllSlots()) {
+            const data2 = fetchData(slot, {});
+            if (data2.type?.split(' ', 2)[0] === data.type.split(' ', 2)[0]) {
+              slots.push(slot);
+            }
+          }
+
+          const ranges = calculateRanges(slots);
+          const range = ranges.find(range => range.start <= slot && range.end >= slot);
+          slotSpan.append(` (${range.name.slice('yyyy-mm-dd '.length)}) ${data.type}`);
         }
       });
 
@@ -173,12 +182,10 @@ export default function render() {
         visibleInput.checked = data.visible ?? true;
 
         const slots = [];
-        for (const date of iterateDates()) {
-          for (const slot of iterateSlots(date)) {
-            const data = fetchData(slot, {});
-            if (data.type?.split(' ', 2)[0] === type) {
-              slots.push(slot);
-            }
+        for (const slot of getAllSlots()) {
+          const data = fetchData(slot, {});
+          if (data.type?.split(' ', 2)[0] === type) {
+            slots.push(slot);
           }
         }
 
