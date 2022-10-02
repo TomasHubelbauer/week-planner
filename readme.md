@@ -81,11 +81,6 @@ The improvements I have in mind are kept in this readme.
 
   Right now I am leaking data all over the place.
 
-- [ ] Generate the screenshot in a GitHub Actions workflow and push it to readme
-
-  I added the screenshot manually but it is already out of date, so let's make
-  that automatic.
-
 - [ ] Select the current slot when the browser tab gains focus
 
   This will make it easy to spot and annotate fast.
