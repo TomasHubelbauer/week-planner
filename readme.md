@@ -88,12 +88,7 @@ The improvements I have in mind are kept in this readme.
 
   This will make it easy to spot and annotate fast.
 
-- [ ] Use a `dialog` with an `input` with a pre-filled `datalist` of types
-
-  The `prompt` is a good and easy free form input solution, but it doesn't allow
-  one to pick something already used before quickly.
-  By using a `datalist`, I will get the freedom of free-form but also the speed
-  of pre-filled.
+- [ ] Pre-fill `datalist` of existing types on `#typeInput`
 
 - [ ] Accept `hh:mm` format in the minimum and maximum fields
 

@@ -1,7 +1,7 @@
 import calculateColor from './calculateColor.js';
 import calculateRanges from './calculateRanges.js';
 import fetchData from './fetchData.js';
-import getAllSlots from './getSelection.js';
+import getAllSlots from './getAllSlots.js';
 import iterateDates from './iterateDates.js';
 import iterateSlots from './iterateSlots.js';
 import slotDurationMinutes from './slotDurationMinutes.js';
@@ -10,6 +10,9 @@ import storeData from './storeData.js';
 const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const table = document.querySelector('table');
+const slotDiv = document.querySelector('#slotDiv');
+const rangeDiv = document.querySelector('#rangeDiv');
+const typeInput = document.querySelector('#typeInput');
 const typeDiv = document.querySelector('#typeDiv');
 const minimumInput = document.querySelector('#minimumInput');
 const maximumInput = document.querySelector('#maximumInput');
@@ -36,21 +39,66 @@ table.addEventListener('mouseup', () => {
   }
 
   const ranges = calculateRanges(slots).map(range => range.name).join(', ');
+  if (ranges.length > 0) {
+    rangeDiv.textContent = ranges;
+  }
+  else {
+    rangeDiv.textContent = '';
+  }
+
   const types = slots.map(slot => fetchData(slot, {}).type).filter((type, index, array) => type && array.indexOf(type) === index);
-  const type = prompt(`Type${ranges.length > 0 ? ' ' + ranges : ''}:`, types.length === 1 ? types[0] : undefined);
-  if (type !== null && !type.split(' ', 2)[0].endsWith('ing')) {
-    alert('The first word of the annotation is not a continuous time verb!');
+  if (types.length === 1) {
+    typeInput.value = types[0];
+  }
+  else {
+    typeInput.value = '';
   }
 
-  for (const slot of slots) {
-    storeData(slot, data => {
-      data.isSelected = false;
-      if (type) {
-        data.type = type;
+  slotDiv.style.display = 'initial';
+  typeInput.focus();
+});
+
+typeInput.addEventListener('keydown', event => {
+  if (event.key !== 'Enter' && event.key !== 'Escape') {
+    return;
+  }
+
+  const slots = [];
+  for (const slot of getAllSlots()) {
+    const data = fetchData(slot, {});
+    if (data.isSelected) {
+      slots.push(slot);
+    }
+  }
+
+  switch (event.key) {
+    case 'Enter': {
+      const type = typeInput.value;
+      if (type && !type.split(' ', 2)[0].endsWith('ing')) {
+        alert('The first word of the annotation is not a continuous time verb!');
       }
-    }, {});
+
+      for (const slot of slots) {
+        storeData(slot, data => {
+          data.isSelected = false;
+          data.type = type;
+        }, {});
+      }
+
+      break;
+    }
+    case 'Escape': {
+      for (const slot of slots) {
+        storeData(slot, data => {
+          data.isSelected = false;
+        }, {});
+      }
+
+      break;
+    }
   }
 
+  slotDiv.style.display = 'none';
   render();
 });
 

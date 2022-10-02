@@ -66,6 +66,10 @@ a {
   text-decoration: none;
 }
 
+#slotDiv {
+  display: none;
+}
+
 #typeDiv:not([data-type]) {
   display: none;
 }
