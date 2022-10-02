@@ -1,0 +1,33 @@
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+      with:
+        ref: main
+      
+    - name: Take a screenshot
+      run: |
+        # Make Bash print the commands as it is executing them
+        set -x
+        
+        # Impersonate the GitHub Actions service account
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        
+        # Run the workflow script
+        firefox -headless -screenshot screenshot.png https://www.example.com
+        
+        # Stage the Git index changes resulting from the CI script
+        git add screenshot.png
+                
+        # Commit the staged changes to the workflow repository
+        git commit -m "Refresh the screenshot" -m "This screenshot was updated automatically using GitHub Actions"
+        
+        # Push the commit to the workflow repository
+        git push
