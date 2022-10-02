@@ -36,7 +36,8 @@ table.addEventListener('mouseup', () => {
   }
 
   const ranges = calculateRanges(slots).map(range => range.name).join(', ');
-  const type = prompt(`Type ${ranges}:`);
+  const types = slots.map(slot => fetchData(slot, {}).type).filter((type, index, array) => type && array.indexOf(type) === index);
+  const type = prompt(`Type${ranges.length > 0 ? ' ' + ranges : ''}:`, types.length === 1 ? types[0] : undefined);
   if (type !== null && !type.split(' ', 2)[0].endsWith('ing')) {
     alert('The first word of the annotation is not a continuous time verb!');
   }
