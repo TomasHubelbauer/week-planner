@@ -21,7 +21,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         
         # Run the workflow script
-        firefox -screenshot screenshot.png https://www.example.com
+        google-chrome --headless --screenshot="screenshot.png" https://www.example.com
         
         # Stage the Git index changes resulting from the CI script
         git add screenshot.png
