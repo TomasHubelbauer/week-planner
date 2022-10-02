@@ -11,10 +11,7 @@ function makeEvent(name, data) {
   return event;
 }
 
-// Check whether a flag file exists signalling the demo experience should engage
-try {
-  await import('./demo.js');
-
+if (location.pathname === '/home/runner/work/week-planner/week-planner/index.html') {
   // Clear the local storage for local development, it is always empty on the CI
   localStorage.clear();
 
@@ -46,8 +43,5 @@ try {
     typeInput.dispatchEvent(makeEvent('keydown', { key: 'Enter' }));
   }
 
-  document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()} ${JSON.stringify(location)}`;
-}
-catch (error) {
-
+  document.querySelector('#slotSpan').textContent = `Screenshot @ ${new Date().toISOString()}`;
 }
