@@ -25,7 +25,15 @@ jobs:
         
         # Stage the Git index changes resulting from the CI script
         git add screenshot.png
-                
+
+    - name: Upload the screenshot to an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: screenshot.png
+        path: screenshot.png
+
+    - name: Upload the screenshot to the repository
+      run: |
         # Commit the staged changes to the workflow repository
         git commit -m "Refresh the screenshot" -m "This screenshot was updated automatically using GitHub Actions"
         
